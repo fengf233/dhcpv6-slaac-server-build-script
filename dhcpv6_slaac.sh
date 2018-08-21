@@ -178,6 +178,7 @@ defconfig() {
 		#if you want to connect DHCP-PD subnet,you should add default route 
 		#that route direct to your ipv6 address that you get from dhcpv6 server(or static address)
 		#this option set to your ipv6 address that you should directed
+		PD6=2001:172:16:1000::
 		ROUTE6=2001:172:16:1000::500
 		EOF
 	
@@ -207,7 +208,7 @@ dhcp_script() {
 				#add defualt route
 				ip -6 route add 2001:172:16:1000::/64 dev $INTERFACES
 				#route to lan side
-				ip -6 route add 2001:172:16:3000::/64 via \$ROUTE6
+				ip -6 route add \${PD6}/64 via \$ROUTE6
 				#ip -6 route add 2001:172:16::/48 dev eth0 
 				# must add ipv6 forwarding 
 				echo 1 > /proc/sys/net/ipv6/conf/all/forwarding
